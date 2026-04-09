@@ -245,14 +245,14 @@ Les données sont **en mémoire** : elles sont réinitialisées à chaque redém
 
 **Critères de validation** :
 
-- [ ] La grille affiche les articles avec image, titre, prix formaté (ex : "12,50 €"), catégorie, état
-- [ ] La recherche filtre les articles en temps réel
-- [ ] Chaque filtre fonctionne individuellement
-- [ ] Les filtres se combinent correctement
-- [ ] Le tri change l'ordre d'affichage
-- [ ] Un état vide est affiché quand aucun résultat ne correspond
-- [ ] Un spinner s'affiche pendant le chargement
-- [ ] Un message d'erreur s'affiche si l'API ne répond pas
+- [✅] La grille affiche les articles avec image, titre, prix formaté (ex : "12,50 €"), catégorie, état
+- [✅] La recherche filtre les articles en temps réel
+- [✅] Chaque filtre fonctionne individuellement
+- [✅] Les filtres se combinent correctement
+- [✅] Le tri change l'ordre d'affichage
+- [✅] Un état vide est affiché quand aucun résultat ne correspond
+- [✅] Un spinner s'affiche pendant le chargement
+- [✅] Un message d'erreur s'affiche si l'API ne répond pas
 
 ### 6.2 Détail article (1 pt)
 
@@ -266,8 +266,8 @@ Les données sont **en mémoire** : elles sont réinitialisées à chaque redém
 
 **Critères de validation** :
 
-- [ ] Cliquer sur une carte du catalogue affiche la page de détail
-- [ ] Tous les champs de l'article sont affichés
+- [✅] Cliquer sur une carte du catalogue affiche la page de détail
+- [✅] Tous les champs de l'article sont affichés
 - [ ] La date est formatée en français (ex : "15/04/2026")
 - [ ] Le prix est formaté (ex : "25,00 €")
 - [ ] Un lien permet de revenir au catalogue

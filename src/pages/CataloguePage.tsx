@@ -12,7 +12,7 @@ export default function CataloguePage() {
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [sort, setSort] = useState("date_desc");
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["articles", search, category, condition, sort, priceMin, priceMax],
     queryFn: () => {
       const params = new URLSearchParams();
