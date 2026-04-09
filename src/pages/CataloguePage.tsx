@@ -2,22 +2,51 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "../services/api";
 import type { Article } from "../types/article";
 import { Link } from "react-router-dom";
+import { CONDITIONS, CATEGORIES } from "../types/article";
+import { useState } from "react";
 
 export default function CataloguePage() {
+  const [search, setSearch] = useState("");
   const { data } = useQuery({
-    queryKey: ["articles"],
-    queryFn: () => api.get<Article[]>("api/articles")
+    queryKey: ["articles", search],
+    queryFn: () => {
+      const params = new URLSearchParams();
+
+      if (search.trim() ) {
+        params.set("search", search.trim());
+      }
+
+      const queryString = params.toString();
+      const path = queryString ? `api/articles?${queryString}` : "api/articles";
+
+      return api.get<Article[]>(path)
+    }
   });
 
-  if (!data || data.length === 0) {
-    return <p>
-      Aucun article trouvé.
-    </p>;
+  function getConditionLabel(conditionValue: string) {
+    return (
+      CONDITIONS.find((condition) => condition.value === conditionValue)?.label ?? conditionValue
+    );
   }
+
+  function getCategoryLabel(categoryId: string) {
+    return (
+      CATEGORIES.find((category) => category.id === categoryId)?.label ?? categoryId
+    );
+  }
+
+
 
   return (
     <div>
-      {data.map((article) => (
+      <input
+        type="text"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+        placeholder="Rechercher par titre ou description..."
+      />
+      {(!data || data.length === 0) && <p>Aucun article trouvé.</p>}
+      {data?.map((article) => (
         <Link
           key={article.id}
           to={`/articles/${article.id}`}
@@ -31,6 +60,13 @@ export default function CataloguePage() {
             <h2>{article.title}</h2>
             <p>
               {article.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR"})}
+            </p>
+            <p>
+              {getConditionLabel(article.condition)} - {getCategoryLabel(article.category)}
+            </p>
+
+            <p>
+              Vendeur : {article.userName}
             </p>
           </div>
         </Link>
