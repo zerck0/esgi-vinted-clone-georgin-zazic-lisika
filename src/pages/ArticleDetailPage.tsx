@@ -3,6 +3,7 @@ import { api } from "../services/api";
 import type { Article } from "../types/article";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORIES, CONDITIONS } from "../types/article";
+import { Link } from "react-router-dom";
 
 export default function ArticleDetailPage() {
     const { id } = useParams<{id: string}>();
@@ -27,8 +28,20 @@ export default function ArticleDetailPage() {
     if (isError || !article) {
       return <p>Article introuvable ou une erreur est survenue.</p>;
     }
+
+    const formattedPrice = article.price.toLocaleString("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    });
+
+    const formattedDate = new Date(article.createdAt).toLocaleDateString("fr-FR");
+
+
     return (
   <div className="max-w-2xl mx-auto px-4 py-8">
+    <Link to="/" className="text-teal-600 hover:underline text-sm mb-6 inline-block">
+       Retour au catalogue
+    </Link>
     <img
       src={article.imageUrl}
       alt={article.title}
@@ -36,6 +49,7 @@ export default function ArticleDetailPage() {
     />
 
     <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
+    <p className="text-teal-600 font-bold text-xl mb-4">{formattedPrice}</p>
     <p className="text-gray-600 mb-6">{article.description}</p>
 
     <ul className="flex flex-col gap-2 text-sm text-gray-700">
@@ -43,6 +57,7 @@ export default function ArticleDetailPage() {
       <li><span className="font-medium">État :</span> {getConditionLabel(article.condition)}</li>
       <li><span className="font-medium">Taille :</span> {article.size}</li>
       <li><span className="font-medium">Vendeur :</span> {article.userName}</li>
+      <li><span className="font-medium">Publié le :</span> {formattedDate}</li>
     </ul>
   </div>
 );
