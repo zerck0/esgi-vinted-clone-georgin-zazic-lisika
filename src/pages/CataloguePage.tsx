@@ -129,7 +129,6 @@ export default function CataloguePage() {
             className="border rounded-md px-3 py-2 text-sm"
           >
             <option value="date_desc">Plus récent</option>
-            <option value="date_asc">Plus ancien</option>
             <option value="price_asc">Prix croissant</option>
             <option value="price_desc">Prix décroissant</option>
           </select>
