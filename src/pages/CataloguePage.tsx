@@ -4,6 +4,8 @@ import type { Article } from "../types/article";
 import { Link } from "react-router-dom";
 import { CONDITIONS, CATEGORIES } from "../types/article";
 import { useState } from "react";
+import { FavoriteButton } from "../components/FavoriteButton";
+import { useFavorites } from "../hooks/useFavorites";
 
 export default function CataloguePage() {
   const [search, setSearch] = useState("");
@@ -12,12 +14,15 @@ export default function CataloguePage() {
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [sort, setSort] = useState("date_desc");
+
+  const favoriteIds = useFavorites();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["articles", search, category, condition, sort, priceMin, priceMax],
     queryFn: () => {
       const params = new URLSearchParams();
 
-      if (search.trim() )
+      if (search.trim())
         params.set("search", search.trim());
       if (category)
         params.set("category", category);
@@ -29,11 +34,12 @@ export default function CataloguePage() {
         params.set("priceMin", priceMin);
       if (priceMax)
         params.set("priceMax", priceMax);
-      const queryString = params.toString();
-      const path = queryString ? `api/articles?${queryString}` : "/api/articles";
 
-      return api.get<Article[]>(path)
-    }
+      const queryString = params.toString();
+      const path = queryString ? `/api/articles?${queryString}` : "/api/articles";
+
+      return api.get<Article[]>(path);
+    },
   });
 
   function getConditionLabel(conditionValue: string) {
@@ -50,15 +56,18 @@ export default function CataloguePage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
-      {/* Sidebar */}
       <aside className="w-56 shrink-0 flex flex-col gap-6">
         <div>
-          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">Catégories</h3>
+          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">
+            Catégories
+          </h3>
           <ul className="flex flex-col gap-1">
             <li>
               <button
                 onClick={() => setCategory("")}
-                className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${category === "" ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"}`}
+                className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${
+                  category === "" ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"
+                }`}
               >
                 Toutes
               </button>
@@ -67,7 +76,9 @@ export default function CataloguePage() {
               <li key={cat.id}>
                 <button
                   onClick={() => setCategory(cat.id)}
-                  className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${category === cat.id ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"}`}
+                  className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${
+                    category === cat.id ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"
+                  }`}
                 >
                   {cat.label}
                 </button>
@@ -77,7 +88,9 @@ export default function CataloguePage() {
         </div>
 
         <div>
-          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">État</h3>
+          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">
+            État
+          </h3>
           <select
             value={condition}
             onChange={(event) => setCondition(event.target.value)}
@@ -93,7 +106,9 @@ export default function CataloguePage() {
         </div>
 
         <div>
-          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">Prix</h3>
+          <h3 className="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">
+            Prix
+          </h3>
           <div className="flex gap-2">
             <input
               type="number"
@@ -113,7 +128,6 @@ export default function CataloguePage() {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1">
         <div className="flex gap-3 mb-6">
           <input
@@ -142,27 +156,36 @@ export default function CataloguePage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {data?.map((article) => (
-            <Link
+            <div
               key={article.id}
-              to={`/articles/${article.id}`}
-              className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col"
+              className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col relative"
             >
-              <img
-                src={article.imageUrl}
-                alt={article.title}
-                className="w-full h-48 object-cover"
+              <Link
+                to={`/articles/${article.id}`}
+                className="flex flex-col h-full"
+              >
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-3 flex flex-col gap-1">
+                  <h2 className="font-semibold text-sm truncate">{article.title}</h2>
+                  <p className="text-teal-600 font-bold text-sm">
+                    {article.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {getConditionLabel(article.condition)} · {getCategoryLabel(article.category)}
+                  </p>
+                  <p className="text-xs text-gray-400">{article.userName}</p>
+                </div>
+              </Link>
+
+              <FavoriteButton
+                articleId={article.id}
+                isFavorited={favoriteIds.includes(article.id)}
               />
-              <div className="p-3 flex flex-col gap-1">
-                <h2 className="font-semibold text-sm truncate">{article.title}</h2>
-                <p className="text-teal-600 font-bold text-sm">
-                  {article.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
-                </p>
-                <p className="text-xs text-gray-500">
-                  {getConditionLabel(article.condition)} · {getCategoryLabel(article.category)}
-                </p>
-                <p className="text-xs text-gray-400">{article.userName}</p>
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
