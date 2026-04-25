@@ -66,11 +66,21 @@ export default function MyArticlesPage() {
               </p>
             </div>
           </Link>
-          <button
-            onClick={() => handleDelete(article.id)}
-            className="mt-2 text-red-500 text-sm hover:underline">
-              Supprimer
-          </button></>
+           <div className="mt-2 flex gap-2">
+             <Link
+               to={`/articles/${article.id}/edit`}
+               className="text-teal-600 text-sm hover:underline"
+             >
+               Modifier
+             </Link>
+             <button
+               onClick={() => handleDelete(article.id)}
+               className="text-red-500 text-sm hover:underline"
+             >
+               Supprimer
+             </button>
+           </div>
+         </>
         ))}
       </div>
     </div>

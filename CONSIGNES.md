@@ -289,12 +289,12 @@ Les données sont **en mémoire** : elles sont réinitialisées à chaque redém
 
 **Critères de validation** :
 
-- [ ] Le formulaire affiche tous les champs
-- [ ] Les catégories et états sont proposés en menu déroulant (issus de `CATEGORIES` et `CONDITIONS`)
-- [ ] Soumettre un formulaire vide affiche les erreurs de validation
-- [ ] Soumettre un formulaire valide crée l'article et redirige vers sa page de détail
-- [ ] L'article apparaît dans le catalogue après création
-- [ ] Une erreur API est affichée à l'utilisateur
+- [✅] Le formulaire affiche tous les champs
+- [✅] Les catégories et états sont proposés en menu déroulant (issus de `CATEGORIES` et `CONDITIONS`)
+- [✅] Soumettre un formulaire vide affiche les erreurs de validation
+- [✅] Soumettre un formulaire valide crée l'article et redirige vers sa page de détail
+- [✅] L'article apparaît dans le catalogue après création
+- [✅] Une erreur API est affichée à l'utilisateur
 
 ### 6.4 Mes annonces + suppression (1,5 pts)
 
@@ -310,12 +310,12 @@ Les données sont **en mémoire** : elles sont réinitialisées à chaque redém
 
 **Critères de validation** :
 
-- [ ] La page affiche uniquement les articles de l'utilisateur
-- [ ] La page est vide au démarrage (les articles du seed n'appartiennent pas à l'utilisateur)
-- [ ] Après création d'un article, il apparaît dans "Mes annonces"
-- [ ] Cliquer sur "Supprimer" demande confirmation (par ex. `window.confirm`)
-- [ ] Confirmer la suppression retire l'article de la liste
-- [ ] L'article supprimé n'apparaît plus dans le catalogue
+- [✅] La page affiche uniquement les articles de l'utilisateur
+- [✅] La page est vide au démarrage (les articles du seed n'appartiennent pas à l'utilisateur)
+- [✅] Après création d'un article, il apparaît dans "Mes annonces"
+- [✅] Cliquer sur "Supprimer" demande confirmation (par ex. `window.confirm`)
+- [✅] Confirmer la suppression retire l'article de la liste
+- [✅] L'article supprimé n'apparaît plus dans le catalogue
 
 ### 6.5 Favoris (2 pts)
 
@@ -333,12 +333,12 @@ Les données sont **en mémoire** : elles sont réinitialisées à chaque redém
 
 **Critères de validation** :
 
-- [ ] Un bouton favori est visible sur les cartes du catalogue
-- [ ] Cliquer ajoute/retire le favori (l'icône change)
-- [ ] La page Favoris liste les articles en favoris
-- [ ] Retirer un favori depuis la page Favoris met à jour la liste
-- [ ] L'état des favoris est cohérent entre le catalogue et la page Favoris
-- [ ] Un état vide est affiché quand il n'y a aucun favori
+- [✅] Un bouton favori est visible sur les cartes du catalogue
+- [✅] Cliquer ajoute/retire le favori (l'icône change)
+- [✅] La page Favoris liste les articles en favoris
+- [✅] Retirer un favori depuis la page Favoris met à jour la liste
+- [✅] L'état des favoris est cohérent entre le catalogue et la page Favoris
+- [✅] Un état vide est affiché quand il n'y a aucun favori
 
 ---
 
