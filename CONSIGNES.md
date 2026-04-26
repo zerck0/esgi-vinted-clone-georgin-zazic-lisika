@@ -358,9 +358,9 @@ Choisissez **au moins 2** fonctionnalités parmi les 4 suivantes. Chaque fonctio
 
 **Critères de validation** :
 
-- [ ] Remplir partiellement le formulaire, quitter la page, revenir : les champs sont pré-remplis
-- [ ] La sauvegarde est automatique (pas de bouton)
-- [ ] Après publication réussie, revenir sur le formulaire : les champs sont vides (brouillon supprimé)
+- [✅] Remplir partiellement le formulaire, quitter la page, revenir : les champs sont pré-remplis
+- [✅] La sauvegarde est automatique (pas de bouton)
+- [✅] Après publication réussie, revenir sur le formulaire : les champs sont vides (brouillon supprimé)
 
 ### 7.2 Édition d'annonce (1,5 pts)
 
@@ -377,11 +377,11 @@ Choisissez **au moins 2** fonctionnalités parmi les 4 suivantes. Chaque fonctio
 
 **Critères de validation** :
 
-- [ ] Cliquer sur "Modifier" ouvre le formulaire avec les valeurs actuelles
-- [ ] Modifier un champ et soumettre met à jour l'article
-- [ ] Après modification, la page de détail affiche les nouvelles valeurs
-- [ ] Tenter de modifier l'article de quelqu'un d'autre affiche un message d'erreur
-- [ ] Le composant de formulaire est partagé entre création et édition
+- [✅] Cliquer sur "Modifier" ouvre le formulaire avec les valeurs actuelles
+- [✅] Modifier un champ et soumettre met à jour l'article
+- [✅] Après modification, la page de détail affiche les nouvelles valeurs
+- [✅] Tenter de modifier l'article de quelqu'un d'autre affiche un message d'erreur
+- [✅] Le composant de formulaire est partagé entre création et édition
 
 ### 7.3 Tests composants (1,5 pts)
 

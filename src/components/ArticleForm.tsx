@@ -1,6 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { CATEGORIES, CONDITIONS } from "../types/article";
 import type { Article, ArticleFormData } from "../types/article";
+
+const DRAFT_KEY = "article_form_draft";
 
 type PublishForm = {
   title: string;
@@ -68,17 +70,46 @@ export default function ArticleForm({
   onSubmit,
   isSubmitting = false,
 }: ArticleFormProps) {
-  const [form, setForm] = useState<PublishForm>({
-    title: initialData?.title ?? "",
-    description: initialData?.description ?? "",
-    price: initialData?.price?.toString() ?? "",
-    category: initialData?.category ?? "",
-    condition: initialData?.condition ?? "",
-    size: initialData?.size ?? "",
-    imageUrl: initialData?.imageUrl ?? "",
-  });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [apiError, setApiError] = useState<string | null>(null);
+  const [form, setForm] = useState<PublishForm>(() => {
+     if (initialData) {
+       return {
+         title: initialData.title,
+         description: initialData.description,
+         price: initialData.price.toString(),
+         category: initialData.category,
+         condition: initialData.condition,
+         size: initialData.size,
+         imageUrl: initialData.imageUrl,
+       };
+     }
+
+     const savedDraft = localStorage.getItem(DRAFT_KEY);
+     if (savedDraft) {
+       try {
+         return JSON.parse(savedDraft);
+       } catch (error) {
+         console.error("Erreur lecture du brouillon", error);
+       }
+     }
+
+     return {
+       title: "",
+       description: "",
+       price: "",
+       category: "",
+       condition: "",
+       size: "",
+       imageUrl: "",
+      };
+    });
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [apiError, setApiError] = useState<string | null>(null);
+
+    useEffect(() => {
+    if (!initialData) {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
+    }
+}, [form, initialData]);
 
   function updateField(field: keyof PublishForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -111,6 +142,9 @@ export default function ArticleForm({
 
     try {
       await onSubmit(payload);
+      if (!initialData) {
+        localStorage.removeItem(DRAFT_KEY);
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Une erreur est survenue.";

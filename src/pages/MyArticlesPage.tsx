@@ -7,6 +7,7 @@ import type { Article } from "../types/article";
 export default function MyArticlesPage() {
 
   const userId = useCurrentUserId();
+  const queryClient = useQueryClient();
 
   const { data:articles, isLoading, isError } = useQuery({
     queryKey: ["my-articles", userId],
@@ -31,7 +32,6 @@ export default function MyArticlesPage() {
     );
   }
 
-  const queryClient = useQueryClient();
 
   const handleDelete = async (articleId: string) => {
   const confirmDelete = window.confirm("Voulez-vous vraiment supprimer cette annonce ?");

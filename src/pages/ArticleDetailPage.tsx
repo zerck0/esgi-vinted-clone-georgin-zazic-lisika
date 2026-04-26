@@ -4,9 +4,13 @@ import type { Article } from "../types/article";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORIES, CONDITIONS } from "../types/article";
 import { Link } from "react-router-dom";
+import { FavoriteButton } from "../components/FavoriteButton";
+import { useFavorites } from "../hooks/useFavorites";
 
 export default function ArticleDetailPage() {
     const { id } = useParams<{id: string}>();
+
+    const favoritesIDs = useFavorites();
 
     const { data: article, isLoading, isError } = useQuery<Article>({
         queryKey: ["article", id],
@@ -42,12 +46,18 @@ export default function ArticleDetailPage() {
     <Link to="/" className="text-teal-600 hover:underline text-sm mb-6 inline-block">
        Retour au catalogue
     </Link>
+  <div className="relative mb-6">
     <img
       src={article.imageUrl}
       alt={article.title}
-      className="w-full h-80 object-cover rounded-xl mb-6"
+      className="w-full h-80 object-cover rounded-xl"
+    />
+    <FavoriteButton
+      articleId={article.id}
+      isFavorited={favoritesIDs.includes(article.id)}
     />
 
+  </div>
     <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
     <p className="text-teal-600 font-bold text-xl mb-4">{formattedPrice}</p>
     <p className="text-gray-600 mb-6">{article.description}</p>
