@@ -18,25 +18,29 @@ export default function CataloguePage() {
   const favoriteIds = useFavorites();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["articles", search, category, condition, sort, priceMin, priceMax],
+    queryKey: [
+      "articles",
+      search,
+      category,
+      condition,
+      sort,
+      priceMin,
+      priceMax,
+    ],
     queryFn: () => {
       const params = new URLSearchParams();
 
-      if (search.trim())
-        params.set("search", search.trim());
-      if (category)
-        params.set("category", category);
-      if (condition)
-        params.set("condition", condition);
-      if (sort)
-        params.set("sort", sort);
-      if (priceMin)
-        params.set("priceMin", priceMin);
-      if (priceMax)
-        params.set("priceMax", priceMax);
+      if (search.trim()) params.set("search", search.trim());
+      if (category) params.set("category", category);
+      if (condition) params.set("condition", condition);
+      if (sort) params.set("sort", sort);
+      if (priceMin) params.set("priceMin", priceMin);
+      if (priceMax) params.set("priceMax", priceMax);
 
       const queryString = params.toString();
-      const path = queryString ? `/api/articles?${queryString}` : "/api/articles";
+      const path = queryString
+        ? `/api/articles?${queryString}`
+        : "/api/articles";
 
       return api.get<Article[]>(path);
     },
@@ -44,13 +48,15 @@ export default function CataloguePage() {
 
   function getConditionLabel(conditionValue: string) {
     return (
-      CONDITIONS.find((condition) => condition.value === conditionValue)?.label ?? conditionValue
+      CONDITIONS.find((condition) => condition.value === conditionValue)
+        ?.label ?? conditionValue
     );
   }
 
   function getCategoryLabel(categoryId: string) {
     return (
-      CATEGORIES.find((category) => category.id === categoryId)?.label ?? categoryId
+      CATEGORIES.find((category) => category.id === categoryId)?.label ??
+      categoryId
     );
   }
 
@@ -66,7 +72,9 @@ export default function CataloguePage() {
               <button
                 onClick={() => setCategory("")}
                 className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${
-                  category === "" ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"
+                  category === ""
+                    ? "bg-teal-100 text-teal-700 font-semibold"
+                    : "hover:bg-gray-100 text-gray-600"
                 }`}
               >
                 Toutes
@@ -77,7 +85,9 @@ export default function CataloguePage() {
                 <button
                   onClick={() => setCategory(cat.id)}
                   className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition ${
-                    category === cat.id ? "bg-teal-100 text-teal-700 font-semibold" : "hover:bg-gray-100 text-gray-600"
+                    category === cat.id
+                      ? "bg-teal-100 text-teal-700 font-semibold"
+                      : "hover:bg-gray-100 text-gray-600"
                   }`}
                 >
                   {cat.label}
@@ -148,10 +158,18 @@ export default function CataloguePage() {
           </select>
         </div>
 
-        {isLoading && <p className="text-center mt-10 text-gray-500">Chargement...</p>}
-        {isError && <p className="text-center mt-10 text-red-500">Une erreur est survenue.</p>}
+        {isLoading && (
+          <p className="text-center mt-10 text-gray-500">Chargement...</p>
+        )}
+        {isError && (
+          <p className="text-center mt-10 text-red-500">
+            Une erreur est survenue.
+          </p>
+        )}
         {!isLoading && data?.length === 0 && (
-          <p className="text-center mt-10 text-gray-500">Aucun article trouvé.</p>
+          <p className="text-center mt-10 text-gray-500">
+            Aucun article trouvé.
+          </p>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -170,12 +188,18 @@ export default function CataloguePage() {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-3 flex flex-col gap-1">
-                  <h2 className="font-semibold text-sm truncate">{article.title}</h2>
+                  <h2 className="font-semibold text-sm truncate">
+                    {article.title}
+                  </h2>
                   <p className="text-teal-600 font-bold text-sm">
-                    {article.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                    {article.price.toLocaleString("fr-FR", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {getConditionLabel(article.condition)} · {getCategoryLabel(article.category)}
+                    {getConditionLabel(article.condition)} ·{" "}
+                    {getCategoryLabel(article.category)}
                   </p>
                   <p className="text-xs text-gray-400">{article.userName}</p>
                 </div>

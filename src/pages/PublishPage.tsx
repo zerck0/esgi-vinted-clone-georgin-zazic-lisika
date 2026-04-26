@@ -23,9 +23,7 @@ export default function PublishPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
-      <h1 className="text-2xl font-semibold">
-        Publier une annonce
-      </h1>
+      <h1 className="text-2xl font-semibold">Publier une annonce</h1>
 
       <ArticleForm
         onSubmit={handleSubmit}

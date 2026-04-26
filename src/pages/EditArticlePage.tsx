@@ -11,7 +11,11 @@ export default function EditArticlePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: article, isLoading, isError } = useQuery<Article>({
+  const {
+    data: article,
+    isLoading,
+    isError,
+  } = useQuery<Article>({
     queryKey: ["article-edit", id],
     queryFn: () => api.get<Article>(`/api/articles/${id}`),
   });

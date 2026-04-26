@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 import type { Article } from "../types/article";
 
 export default function MyArticlesPage() {
-
   const userId = useCurrentUserId();
   const queryClient = useQueryClient();
 
-  const { data:articles, isLoading, isError } = useQuery({
+  const {
+    data: articles,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["my-articles", userId],
-    queryFn: () => api.get<Article[]>(`/api/users/${userId}/articles`)
+    queryFn: () => api.get<Article[]>(`/api/users/${userId}/articles`),
   });
 
   if (isLoading) {
@@ -32,14 +35,17 @@ export default function MyArticlesPage() {
     );
   }
 
-
   const handleDelete = async (articleId: string) => {
-  const confirmDelete = window.confirm("Voulez-vous vraiment supprimer cette annonce ?");
+    const confirmDelete = window.confirm(
+      "Voulez-vous vraiment supprimer cette annonce ?",
+    );
     if (confirmDelete) {
       try {
         await api.delete(`/api/articles/${articleId}`);
-        await queryClient.invalidateQueries({ queryKey: ["my-articles", userId] });
-      } catch (error) {
+        await queryClient.invalidateQueries({
+          queryKey: ["my-articles", userId],
+        });
+      } catch {
         alert("Erreur lors de la suppression");
       }
     }
@@ -50,37 +56,47 @@ export default function MyArticlesPage() {
       <h1 className="text-2xl font-bold mb-6">Mes annonces</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {articles.map((article) => (
-          <><Link
+          <div
             key={article.id}
-            to={`/articles/${article.id}`}
-            className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col"
+            className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col p-1"
           >
-            <img
-              src={article.imageUrl}
-              alt={article.title}
-              className="w-full h-48 object-cover" />
-            <div className="p-3 flex flex-col gap-1">
-              <h2 className="font-semibold text-sm truncate">{article.title}</h2>
-              <p className="text-teal-600 font-bold text-sm">
-                {article.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
-              </p>
+            <Link
+              to={`/articles/${article.id}`}
+              className="flex flex-col h-full"
+            >
+              <img
+                src={article.imageUrl}
+                alt={article.title}
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <div className="p-3 flex flex-col gap-1">
+                <h2 className="font-semibold text-sm truncate">
+                  {article.title}
+                </h2>
+                <p className="text-teal-600 font-bold text-sm">
+                  {article.price.toLocaleString("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                  })}
+                </p>
+              </div>
+            </Link>
+
+            <div className="p-3 pt-0 mt-auto flex gap-3 border-t border-gray-50 pt-2">
+              <Link
+                to={`/articles/${article.id}/edit`}
+                className="text-teal-600 text-sm font-medium hover:underline"
+              >
+                Modifier
+              </Link>
+              <button
+                onClick={() => handleDelete(article.id)}
+                className="text-red-500 text-sm font-medium hover:underline"
+              >
+                Supprimer
+              </button>
             </div>
-          </Link>
-           <div className="mt-2 flex gap-2">
-             <Link
-               to={`/articles/${article.id}/edit`}
-               className="text-teal-600 text-sm hover:underline"
-             >
-               Modifier
-             </Link>
-             <button
-               onClick={() => handleDelete(article.id)}
-               className="text-red-500 text-sm hover:underline"
-             >
-               Supprimer
-             </button>
-           </div>
-         </>
+          </div>
         ))}
       </div>
     </div>

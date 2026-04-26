@@ -38,27 +38,21 @@ function validate(values: PublishForm): { [key: string]: string } {
   const imageUrl = values.imageUrl.trim();
   const priceNumber = Number(values.price);
 
-  if (!title)
-    errors.title = "Le titre est requis.";
+  if (!title) errors.title = "Le titre est requis.";
   else if (title.length < 3 || title.length > 100)
     errors.title = "Le titre doit contenir entre 3 et 100 caractères.";
-  if (!description)
-    errors.description = "La description est requise.";
+  if (!description) errors.description = "La description est requise.";
   else if (description.length < 10 || description.length > 1000)
-    errors.description = "La description doit contenir entre 10 et 1000 caractères.";
-  if (!values.price)
-    errors.price = "Le prix est requis.";
+    errors.description =
+      "La description doit contenir entre 10 et 1000 caractères.";
+  if (!values.price) errors.price = "Le prix est requis.";
   else if (Number.isNaN(priceNumber) || priceNumber <= 0)
     errors.price = "Le prix doit être supérieur à 0.";
-  if (!values.category)
-    errors.category = "La catégorie est requise.";
-  if (!values.condition)
-    errors.condition = "L'état est requis.";
-  if (!size)
-    errors.size = "La taille est requise.";
+  if (!values.category) errors.category = "La catégorie est requise.";
+  if (!values.condition) errors.condition = "L'état est requis.";
+  if (!size) errors.size = "La taille est requise.";
 
-  if (!imageUrl)
-    errors.imageUrl = "L'URL de l'image est requise.";
+  if (!imageUrl) errors.imageUrl = "L'URL de l'image est requise.";
   else if (!isValidImageUrl(imageUrl))
     errors.imageUrl = "L'URL de l'image est invalide.";
 
@@ -71,45 +65,45 @@ export default function ArticleForm({
   isSubmitting = false,
 }: ArticleFormProps) {
   const [form, setForm] = useState<PublishForm>(() => {
-     if (initialData) {
-       return {
-         title: initialData.title,
-         description: initialData.description,
-         price: initialData.price.toString(),
-         category: initialData.category,
-         condition: initialData.condition,
-         size: initialData.size,
-         imageUrl: initialData.imageUrl,
-       };
-     }
-
-     const savedDraft = localStorage.getItem(DRAFT_KEY);
-     if (savedDraft) {
-       try {
-         return JSON.parse(savedDraft);
-       } catch (error) {
-         console.error("Erreur lecture du brouillon", error);
-       }
-     }
-
-     return {
-       title: "",
-       description: "",
-       price: "",
-       category: "",
-       condition: "",
-       size: "",
-       imageUrl: "",
+    if (initialData) {
+      return {
+        title: initialData.title,
+        description: initialData.description,
+        price: initialData.price.toString(),
+        category: initialData.category,
+        condition: initialData.condition,
+        size: initialData.size,
+        imageUrl: initialData.imageUrl,
       };
-    });
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [apiError, setApiError] = useState<string | null>(null);
+    }
 
-    useEffect(() => {
+    const savedDraft = localStorage.getItem(DRAFT_KEY);
+    if (savedDraft) {
+      try {
+        return JSON.parse(savedDraft);
+      } catch (error) {
+        console.error("Erreur lecture du brouillon", error);
+      }
+    }
+
+    return {
+      title: "",
+      description: "",
+      price: "",
+      category: "",
+      condition: "",
+      size: "",
+      imageUrl: "",
+    };
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  useEffect(() => {
     if (!initialData) {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
     }
-}, [form, initialData]);
+  }, [form, initialData]);
 
   function updateField(field: keyof PublishForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -127,8 +121,7 @@ export default function ArticleForm({
     const validationErrors = validate(form);
     setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length > 0)
-      return;
+    if (Object.keys(validationErrors).length > 0) return;
 
     const payload: ArticleFormData = {
       title: form.title.trim(),
