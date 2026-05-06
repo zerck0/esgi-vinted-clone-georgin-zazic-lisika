@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import MyArticlesPage from "./MyArticlesPage";
+import MyArticlesPage from "../../pages/MyArticlesPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router-dom";
-import { api } from "../services/api";
+import { api } from "../../services/api";
 
-vi.mock("../services/api", () => ({
+vi.mock("../../services/api", () => ({
   api: {
     get: vi.fn(),
   },

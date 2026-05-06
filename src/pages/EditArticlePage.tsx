@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import type { Article, ArticleFormData } from "../types/article";
 import { api } from "../services/api";
 import { useCurrentUserId } from "../hooks/useCurrentUserId";
-import ArticleForm from "../components/ArticleForm";
+import ArticleForm from "../components/article/ArticleForm";
 
 export default function EditArticlePage() {
   const { id } = useParams<{ id: string }>();

@@ -4,7 +4,7 @@ import type { Article } from "../types/article";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORIES, CONDITIONS } from "../types/article";
 import { Link } from "react-router-dom";
-import { FavoriteButton } from "../components/FavoriteButton";
+import { FavoriteButton } from "../components/article/FavoriteButton";
 import { useFavorites } from "../hooks/useFavorites";
 
 export default function ArticleDetailPage() {

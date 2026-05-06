@@ -3,7 +3,7 @@ import { useFavorites } from "../hooks/useFavorites";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../services/api";
 import type { Article } from "../types/article";
-import { FavoriteButton } from "../components/FavoriteButton";
+import { FavoriteButton } from "../components/article/FavoriteButton";
 
 export default function FavoritesPage() {
   const favoriteIds = useFavorites();

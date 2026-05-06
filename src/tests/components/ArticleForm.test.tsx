@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ArticleForm from "./ArticleForm";
+import ArticleForm from "../../components/article/ArticleForm";
 
 describe("ArticleForm", () => {
   it("affiche des messages d'erreur quand on soumet un formulaire vide", () => {

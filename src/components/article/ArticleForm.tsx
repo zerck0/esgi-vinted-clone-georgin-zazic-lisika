@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from "react";
-import { CATEGORIES, CONDITIONS } from "../types/article";
-import type { Article, ArticleFormData } from "../types/article";
+import { CATEGORIES, CONDITIONS } from "../../types/article";
+import type { Article, ArticleFormData } from "../../types/article";
 
 const DRAFT_KEY = "article_form_draft";
 

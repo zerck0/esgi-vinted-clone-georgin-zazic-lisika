@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { FavoriteButton } from "./FavoriteButton";
+import { FavoriteButton } from "../../components/article/FavoriteButton";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-vi.mock("../services/api", () => ({
+vi.mock("../../services/api", () => ({
   api: {
     post: vi.fn(),
     delete: vi.fn(),

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import type { Article, ArticleFormData } from "../types/article";
-import ArticleForm from "../components/ArticleForm";
+import ArticleForm from "../components/article/ArticleForm";
 
 export default function PublishPage() {
   const navigate = useNavigate();
